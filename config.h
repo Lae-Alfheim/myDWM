@@ -70,32 +70,31 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             -1,             XK_Return,      spawn,              {.v = termcmd } },
     { MODKEY,                       -1,             XK_o,           spawn,              {.v = mouse}},
     { MODKEY,                       -1,             XK_c,           spawn,              {.v = screenlock} },
+
     { MODKEY,                       -1,             XK_j,           focusstack,         {.i = +1 } },
     { MODKEY,                       -1,             XK_k,           focusstack,         {.i = -1 } },
     { MODKEY,                       -1,             XK_g,           incnmaster,         {.i = +1 } },
     { MODKEY|ShiftMask,             -1,             XK_g,           incnmaster,         {.i = -1 } },
     { MODKEY,                       -1,             XK_h,           setmfact,           {.f = -0.05} },
     { MODKEY,                       -1,             XK_l,           setmfact,           {.f = +0.05} },
+
     { MODKEY,                       -1,             XK_Return,      zoom,               {0} },
     { MODKEY,                       -1,             XK_Tab,         view,               {0} },
     { MODKEY,                       -1,             XK_q,           killclient,         {0} },
-    /* { MODKEY,                       -1,            XK_t,          setlayout,          {.v = &layouts[0]} },
-     * { MODKEY,                       -1,            XK_f,          setlayout,          {.v = &layouts[1]} },
-     * { MODKEY,                       -1,            XK_m,          setlayout,          {.v = &layouts[2]} },
-     * { MODKEY,                       -1,            XK_space,      setlayout,          {0} }, */
     { MODKEY|ShiftMask,             -1,             XK_space,       togglefloating,     {0} },
     { MODKEY,                       -1,             XK_s,           togglesticky,       {0}},
-    /* { MODKEY,                       -1,            XK_f,           togglescr,          {0} }, */
+
     { MODKEY,                       -1,             XK_0,           view,               {.ui = ~0 } },
     { MODKEY|ShiftMask,             -1,             XK_0,           tag,                {.ui = ~0 } },
-    { MODKEY|ShiftMask,             -1,             XK_comma,       focusmon,           {.i = -1 } },
-    { MODKEY|ShiftMask,             -1,             XK_period,      focusmon,           {.i = +1 } },
+
+    { MODKEY|ControlMask|ShiftMask, -1,             XK_g,           focusmon,           {.i = -1 } },
+    { MODKEY|ControlMask,           -1,             XK_g,           focusmon,           {.i = +1 } },
     { MODKEY|ShiftMask,             -1,             XK_g,           tagmon,             {.i = -1 } },
     { MODKEY,                       -1,             XK_g,           tagmon,             {.i = +1 } },
 
-    TAGKEYS(                        -1,             XK_ampersand,                       0)
+    /* TAGKEYS(                        -1,             XK_ampersand,                       0) */
 
-    /* TAGKEYS(                        -1,             XK_1,                               0) */
+    TAGKEYS(                        -1,             XK_1,                               0)
     TAGKEYS(                        -1,             XK_2,                               1)
     TAGKEYS(                        -1,             XK_3,                               2)
     TAGKEYS(                        -1,             XK_4,                               3)
