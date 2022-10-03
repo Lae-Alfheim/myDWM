@@ -13,21 +13,21 @@ suckless status bar off all, a clock.
 
 - dvorak native use, with my keyboard layout.
 - patches
-        - xtile
-        - warp
-        - stacker
-        - keypressrelease
-        - freespace
-        - fakefullscreen
-        - exresize
-        - goback
-        - doublepressquit
-        - defaultlayooutpermonitor
-        - current_desktop
-        - cropwindows
-        - cool_autostart
-        - aspectresize
-        - cmdcustomize
-        - sticky
-        - ~~cursorwarp~~
+        * xtile
+        * warp
+        * stacker
+        * keypressrelease
+        * freespace
+        * fakefullscreen
+        * exresize
+        * goback
+        * doublepressquit
+        * defaultlayooutpermonitor
+        * current_desktop
+        * cropwindows
+        * cool_autostart
+        * aspectresize
+        * cmdcustomize
+        * sticky
+        * ~~cursorwarp~~
 - ~~remove status bar.~~
