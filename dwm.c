@@ -426,6 +426,8 @@ buttonpress(XEvent *e)
 		unfocus(selmon->sel, 1);
 		selmon = m;
 		focus(NULL);
+        if (selmon->sel)
+            XWarpPointer(dpy, None, selmon->sel->win, 0, 0, 0, 0, c->w/2, c->h/2);
 	}
 	if (ev->window == selmon->barwin) {
 		i = x = 0;
@@ -784,6 +786,7 @@ focusstack(const Arg *arg)
 	if (c) {
 		focus(c);
 		restack(selmon);
+        XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2);
 	}
 }
 
@@ -1028,6 +1031,8 @@ manage(Window w, XWindowAttributes *wa)
 	c->mon->sel = c;
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
+    if (c && c->mon == selmon)
+        XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2);
 	focus(NULL);
 }
 
@@ -1708,25 +1713,28 @@ unmanage(Client *c, int destroyed)
 	Monitor *m = c->mon;
 	XWindowChanges wc;
 
-	detach(c);
-	detachstack(c);
-	if (!destroyed) {
-		wc.border_width = c->oldbw;
-		XGrabServer(dpy); /* avoid race conditions */
-		XSetErrorHandler(xerrordummy);
-		XSelectInput(dpy, c->win, NoEventMask);
-		XConfigureWindow(dpy, c->win, CWBorderWidth, &wc); /* restore border */
-		XUngrabButton(dpy, AnyButton, AnyModifier, c->win);
-		setclientstate(c, WithdrawnState);
-		XSync(dpy, False);
-		XSetErrorHandler(xerror);
-		XUngrabServer(dpy);
-	}
-	free(c);
-	focus(NULL);
-	updateclientlist();
-	arrange(m);
-}
+    detach(c);
+    detachstack(c);
+    if (!destroyed) {
+        wc.border_width = c->oldbw;
+        XGrabServer(dpy); /* avoid race conditions */
+        XSetErrorHandler(xerrordummy);
+        XSelectInput(dpy, c->win, NoEventMask);
+        XConfigureWindow(dpy, c->win, CWBorderWidth, &wc); /* restore border */
+        XUngrabButton(dpy, AnyButton, AnyModifier, c->win);
+        setclientstate(c, WithdrawnState);
+        XSync(dpy, False);
+        XSetErrorHandler(xerror);
+        XUngrabServer(dpy);
+    }
+    free(c);
+    focus(NULL);
+    updateclientlist();
+    arrange(m);
+    if (m == selmon && m->sel)
+        XWarpPointer(dpy, None, m->sel->win, 0, 0, 0, 0,
+            m->sel->w/2, m->sel->h/2);
+ }
 
 void
 unmapnotify(XEvent *e)

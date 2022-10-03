@@ -21,11 +21,11 @@ suckless status bar off all, a clock.
         - goback
         - doublepressquit
         - defaultlayooutpermonitor
-        - cursorwarp
         - current_desktop
         - cropwindows
         - cool_autostart
         - aspectresize
         - cmdcustomize
         - sticky
+        - ~~cursorwarp~~
 - ~~remove status bar.~~
