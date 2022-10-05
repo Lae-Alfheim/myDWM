@@ -14,7 +14,6 @@ suckless status bar off all, a clock.
 - dvorak native use, with my keyboard layout.
 - patches
     * xtile
-    * warp
     * stacker
     * keypressrelease
     * freespace
