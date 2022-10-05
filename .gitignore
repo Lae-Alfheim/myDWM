@@ -1,3 +1,7 @@
+# compiled
+*.o
+dwm
+
 # Prerequisites
 *.d
 
