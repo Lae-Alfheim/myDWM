@@ -29,4 +29,5 @@ suckless status bar off all, a clock.
     * cmdcustomize
     * sticky
     * ~~cursorwarp~~
+- ~~merged config.mk with Makefile~~ 
 - ~~remove status bar.~~
