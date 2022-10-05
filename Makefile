@@ -42,11 +42,10 @@ LDFLAGS  = ${LIBS}
 # compiler and linker
 CC = cc
 # }}}
-
-
-
 #include config.mk
 
+
+# Makefile main {{{
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
@@ -93,3 +92,5 @@ uninstall:
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 .PHONY: all options clean dist install uninstall
+
+# }}}
