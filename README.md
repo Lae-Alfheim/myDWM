@@ -23,10 +23,10 @@ suckless status bar off all, a clock.
     * doublepressquit
     * defaultlayooutpermonitor
     * current_desktop
-    * cropwindows
     * cool_autostart
     * aspectresize
     * cmdcustomize
+    * ~~cropwindows~~
     * ~~sticky~~
     * ~~cursorwarp~~
 - ~~merged config.mk with Makefile~~ 
