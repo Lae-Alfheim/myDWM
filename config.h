@@ -72,8 +72,6 @@ static const Key keys[] = {
     { MODKEY,                       -1,             XK_o,           spawn,              {.v = mouse}},
     { MODKEY,                       -1,             XK_c,           spawn,              {.v = screenlock} },
 
-    { MODKEY,                       -1,             XK_j,           focusstack,         {.i = +1 } },
-    { MODKEY,                       -1,             XK_k,           focusstack,         {.i = -1 } },
     { MODKEY,                       -1,             XK_g,           incnmaster,         {.i = +1 } },
     { MODKEY|ShiftMask,             -1,             XK_g,           incnmaster,         {.i = -1 } },
     { MODKEY,                       -1,             XK_h,           setmfact,           {.f = -0.05} },
@@ -88,8 +86,10 @@ static const Key keys[] = {
     { MODKEY,                       -1,             XK_0,           view,               {.ui = ~0 } },
     { MODKEY|ShiftMask,             -1,             XK_0,           tag,                {.ui = ~0 } },
 
-    { MODKEY|ShiftMask,             -1,             XK_h,           focusmon,           {.i = -1 } },
-    { MODKEY|ShiftMask,             -1,             XK_l,           focusmon,           {.i = +1 } },
+    { MODKEY,                       -1,             XK_j,           focusstack,         {.i = +1 } },
+    { MODKEY,                       -1,             XK_k,           focusstack,         {.i = -1 } },
+    { MODKEY|ShiftMask,             -1,             XK_j,           focusmon,           {.i = +1 } },
+    { MODKEY|ShiftMask,             -1,             XK_k,           focusmon,           {.i = -1 } },
     { MODKEY|ShiftMask,             -1,             XK_g,           tagmon,             {.i = -1 } },
     { MODKEY,                       -1,             XK_g,           tagmon,             {.i = +1 } },
 

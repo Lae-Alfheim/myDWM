@@ -423,36 +423,34 @@ buttonpress(XEvent *e)
 	click = ClkRootWin;
 	/* focus monitor if necessary */
 	if ((m = wintomon(ev->window)) && m != selmon) {
-		unfocus(selmon->sel, 1);
-		selmon = m;
-		focus(NULL);
-        if (selmon->sel)
-            XWarpPointer(dpy, None, selmon->sel->win, 0, 0, 0, 0, c->w/2, c->h/2);
-	}
-	if (ev->window == selmon->barwin) {
-		i = x = 0;
-		do
-			x += TEXTW(tags[i]);
-		while (ev->x >= x && ++i < LENGTH(tags));
-		if (i < LENGTH(tags)) {
-			click = ClkTagBar;
-			arg.ui = 1 << i;
-		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
-			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext))
-			click = ClkStatusText;
-		else
-			click = ClkWinTitle;
-	} else if ((c = wintoclient(ev->window))) {
-		focus(c);
-		restack(selmon);
-		XAllowEvents(dpy, ReplayPointer, CurrentTime);
-		click = ClkClientWin;
-	}
-	for (i = 0; i < LENGTH(buttons); i++)
-		if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
-		&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
-			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+        unfocus(selmon->sel, 1);
+        selmon = m;
+        focus(NULL);
+    }
+    if (ev->window == selmon->barwin) {
+        i = x = 0;
+        do
+            x += TEXTW(tags[i]);
+        while (ev->x >= x && ++i < LENGTH(tags));
+        if (i < LENGTH(tags)) {
+            click = ClkTagBar;
+            arg.ui = 1 << i;
+        } else if (ev->x < x + TEXTW(selmon->ltsymbol))
+            click = ClkLtSymbol;
+        else if (ev->x > selmon->ww - (int)TEXTW(stext))
+            click = ClkStatusText;
+        else
+            click = ClkWinTitle;
+    } else if ((c = wintoclient(ev->window))) {
+    	focus(c);
+    	restack(selmon);
+    	XAllowEvents(dpy, ReplayPointer, CurrentTime);
+    	click = ClkClientWin;
+    }
+    for (i = 0; i < LENGTH(buttons); i++)
+    	if (click == buttons[i].click && buttons[i].func && buttons[i].button == ev->button
+    	&& CLEANMASK(buttons[i].mask) == CLEANMASK(ev->state))
+    		buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
 }
 
 void
@@ -752,15 +750,17 @@ focusin(XEvent *e)
 void
 focusmon(const Arg *arg)
 {
-	Monitor *m;
+    Monitor *m;
 
-	if (!mons->next)
-		return;
-	if ((m = dirtomon(arg->i)) == selmon)
-		return;
-	unfocus(selmon->sel, 0);
-	selmon = m;
-	focus(NULL);
+    if (!mons->next)
+        return;
+    if ((m = dirtomon(arg->i)) == selmon)
+        return;
+    unfocus(selmon->sel, 0);
+    selmon = m;
+    focus(NULL);
+    if (selmon->sel) {
+        XWarpPointer(dpy, None, selmon->sel->win, 0, 0, 0, 0, selmon->sel->w/2, selmon->sel->h/2); }
 }
 
 void
@@ -787,6 +787,7 @@ focusstack(const Arg *arg)
 		focus(c);
 		restack(selmon);
         XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2);
+        /* Cursor Warp */
 	}
 }
 
@@ -977,63 +978,63 @@ killclient(const Arg *arg)
 void
 manage(Window w, XWindowAttributes *wa)
 {
-	Client *c, *t = NULL;
-	Window trans = None;
-	XWindowChanges wc;
+    Client *c, *t = NULL;
+    Window trans = None;
+    XWindowChanges wc;
 
-	c = ecalloc(1, sizeof(Client));
-	c->win = w;
-	/* geometry */
-	c->x = c->oldx = wa->x;
-	c->y = c->oldy = wa->y;
-	c->w = c->oldw = wa->width;
-	c->h = c->oldh = wa->height;
-	c->oldbw = wa->border_width;
+    c = ecalloc(1, sizeof(Client));
+    c->win = w;
+    /* geometry */
+    c->x = c->oldx = wa->x;
+    c->y = c->oldy = wa->y;
+    c->w = c->oldw = wa->width;
+    c->h = c->oldh = wa->height;
+    c->oldbw = wa->border_width;
 
-	updatetitle(c);
-	if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans))) {
-		c->mon = t->mon;
-		c->tags = t->tags;
-	} else {
-		c->mon = selmon;
-		applyrules(c);
-	}
+    updatetitle(c);
+    if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans))) {
+    	c->mon = t->mon;
+    	c->tags = t->tags;
+    } else {
+    	c->mon = selmon;
+    	applyrules(c);
+    }
 
-	if (c->x + WIDTH(c) > c->mon->wx + c->mon->ww)
-		c->x = c->mon->wx + c->mon->ww - WIDTH(c);
-	if (c->y + HEIGHT(c) > c->mon->wy + c->mon->wh)
-		c->y = c->mon->wy + c->mon->wh - HEIGHT(c);
-	c->x = MAX(c->x, c->mon->wx);
-	c->y = MAX(c->y, c->mon->wy);
-	c->bw = borderpx;
+    if (c->x + WIDTH(c) > c->mon->wx + c->mon->ww)
+    	c->x = c->mon->wx + c->mon->ww - WIDTH(c);
+    if (c->y + HEIGHT(c) > c->mon->wy + c->mon->wh)
+    	c->y = c->mon->wy + c->mon->wh - HEIGHT(c);
+    c->x = MAX(c->x, c->mon->wx);
+    c->y = MAX(c->y, c->mon->wy);
+    c->bw = borderpx;
 
-	wc.border_width = c->bw;
-	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
-	XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
-	configure(c); /* propagates border_width, if size doesn't change */
-	updatewindowtype(c);
-	updatesizehints(c);
-	updatewmhints(c);
-	XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
-	grabbuttons(c, 0);
-	if (!c->isfloating)
-		c->isfloating = c->oldstate = trans != None || c->isfixed;
-	if (c->isfloating)
-		XRaiseWindow(dpy, c->win);
-	attach(c);
-	attachstack(c);
-	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
-		(unsigned char *) &(c->win), 1);
-	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
-	setclientstate(c, NormalState);
-	if (c->mon == selmon)
-		unfocus(selmon->sel, 0);
-	c->mon->sel = c;
-	arrange(c->mon);
-	XMapWindow(dpy, c->win);
-    if (c && c->mon == selmon)
-        XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2);
-	focus(NULL);
+    wc.border_width = c->bw;
+    XConfigureWindow(dpy, w, CWBorderWidth, &wc);
+    XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
+    configure(c); /* propagates border_width, if size doesn't change */
+    updatewindowtype(c);
+    updatesizehints(c);
+    updatewmhints(c);
+    XSelectInput(dpy, w, EnterWindowMask|FocusChangeMask|PropertyChangeMask|StructureNotifyMask);
+    grabbuttons(c, 0);
+    if (!c->isfloating)
+    	c->isfloating = c->oldstate = trans != None || c->isfixed;
+    if (c->isfloating)
+    	XRaiseWindow(dpy, c->win);
+    attach(c);
+    attachstack(c);
+    XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
+    	(unsigned char *) &(c->win), 1);
+    XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
+    setclientstate(c, NormalState);
+    if (c->mon == selmon)
+    	unfocus(selmon->sel, 0);
+    c->mon->sel = c;
+    arrange(c->mon);
+    XMapWindow(dpy, c->win);
+    if (c && c->mon == selmon) {  /* Cursor Warp */
+        XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w/2, c->h/2); }
+    focus(NULL);
 }
 
 void
@@ -1748,7 +1749,7 @@ unmanage(Client *c, int destroyed)
     arrange(m);
     if (m == selmon && m->sel)
         XWarpPointer(dpy, None, m->sel->win, 0, 0, 0, 0,
-            m->sel->w/2, m->sel->h/2);
+                m->sel->w/2, m->sel->h/2);
  }
 
 void
