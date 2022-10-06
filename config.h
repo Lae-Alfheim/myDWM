@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance ---------------------------------------------- {{{ */
+static const unsigned int personalVersion   = 1;
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const char *fonts[]          = { "monospace:size=10" };
@@ -28,7 +29,6 @@ static const Rule rules[] = {
      */
     /* class      instance    title       tags mask     isfloating   monitor */
     { "Gimp",     NULL,       NULL,       0,            1,           -1 },
-    { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 /* tagging -------------------------------------------------}}} */
 
@@ -60,7 +60,7 @@ static const Layout layouts[] = {
  */
 
 /* commands */
-static const char *dmenucmd[] = { "dmenu_run", "-c -l 30", NULL };
+static const char *dmenucmd[] = { "dmenu_run", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *mouse[]  = { "xmouseless", NULL };
 static const char *screenlock[]  = { "slock", NULL };

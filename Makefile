@@ -44,7 +44,6 @@ CC = cc
 # }}}
 #include config.mk
 
-
 # Makefile main {{{
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
