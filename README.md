@@ -27,7 +27,7 @@ suckless status bar off all, a clock.
     * cool_autostart
     * aspectresize
     * cmdcustomize
-    * sticky
+    * ~~sticky~~
     * ~~cursorwarp~~
 - ~~merged config.mk with Makefile~~ 
 - ~~remove status bar.~~
