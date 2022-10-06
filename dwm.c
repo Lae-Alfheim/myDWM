@@ -687,7 +687,7 @@ configurerequest(XEvent *e)
             if (ISVISIBLE(c))
                 XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
             if (cc) {
-                cropresize(cc); {
+                cropresize(cc); }
         } else {
         	configure(c); }
 	} else {
