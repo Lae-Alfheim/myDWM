@@ -654,14 +654,14 @@ configurerequest(XEvent *e)
     XConfigureRequestEvent *ev = &e->xconfigurerequest;
     XWindowChanges wc;
 
-	if ((c = wintoclient(ev->window))
+    if ((c = wintoclient(ev->window))
             || (c = cc = cropwintoclient(ev->window))) {
         if (ev->value_mask & CWBorderWidth)
             c->bw = ev->border_width;
         else if (c->isfloating || !selmon->lt[selmon->sellt]->arrange) {
             m = c->mon;
-			if (c->crop) {
-				c = c->crop; }
+            if (c->crop) {
+                c = c->crop; }
             if (ev->value_mask & CWX) {
                 c->oldx = c->x;
                 c->x = m->mx + ev->x;
@@ -686,8 +686,8 @@ configurerequest(XEvent *e)
                 configure(c);
             if (ISVISIBLE(c))
                 XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
-			if (cc) {
-				cropresize(cc); }
+            if (cc) {
+                cropresize(cc); }
         } else {
             configure(c); }
     } else {
@@ -776,8 +776,8 @@ enternotify(XEvent *e)
     if ((ev->mode != NotifyNormal || ev->detail == NotifyInferior) && ev->window != root)
         return;
     c = wintoclient(ev->window);
-	if (!c) {
-		c = cropwintoclient(ev->window); }
+    if (!c) {
+        c = cropwintoclient(ev->window); }
     m = c ? c->mon : wintomon(ev->window);
     if (m != selmon) {
         unfocus(selmon->sel, 1);
@@ -1045,8 +1045,8 @@ killclient(const Arg *arg)
 {
     if (!selmon->sel)
         return;
-	if (selmon->sel->crop) {
-		cropdelete(selmon->sel); }
+    if (selmon->sel->crop) {
+        cropdelete(selmon->sel); }
     if (!sendevent(selmon->sel, wmatom[WMDelete])) {
         XGrabServer(dpy);
         XSetErrorHandler(xerrordummy);
@@ -1190,10 +1190,10 @@ movemouse(const Arg *arg)
     restack(selmon);
     ocx = c->x;
     ocy = c->y;
-	if (arg->i == 1 && c->crop) {
-		ocx = c->crop->x;
-		ocy = c->crop->y;
-	}
+    if (arg->i == 1 && c->crop) {
+        ocx = c->crop->x;
+        ocy = c->crop->y;
+    }
     if (XGrabPointer(dpy, root, False, MOUSEMASK, GrabModeAsync, GrabModeAsync,
         None, cursor[CurMove]->cursor, CurrentTime) != GrabSuccess)
         return;
@@ -1214,12 +1214,12 @@ movemouse(const Arg *arg)
 
             nx = ocx + (ev.xmotion.x - x);
             ny = ocy + (ev.xmotion.y - y);
-			if (arg->i == 1 && c->crop) {
-				c->crop->x = nx;
-				c->crop->y = ny;
-				cropresize(c);
-				continue;
-			}
+            if (arg->i == 1 && c->crop) {
+                c->crop->x = nx;
+                c->crop->y = ny;
+                cropresize(c);
+                continue;
+            }
             if (abs(selmon->wx - nx) < snap)
                 nx = selmon->wx;
             else if (abs((selmon->wx + selmon->ww) - (nx + WIDTH(c))) < snap)
@@ -1271,10 +1271,10 @@ propertynotify(XEvent *e)
         updatestatus();
     else if (ev->state == PropertyDelete)
         return; /* ignore */
-	else if ((c = wintoclient(ev->window))
+    else if ((c = wintoclient(ev->window))
             || (c = cropwintoclient(ev->window))) {
-		if (c->crop)
-			c = c->crop;
+        if (c->crop)
+            c = c->crop;
         switch(ev->atom) {
         default: break;
         case XA_WM_TRANSIENT_FOR:
@@ -1368,17 +1368,17 @@ resizemouse(const Arg *arg)
     if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
         return;
     restack(selmon);
-	if (arg->i == 1)
-		cropwindow(c);
+    if (arg->i == 1)
+        cropwindow(c);
     ocx = c->x;
     ocy = c->y;
     if (XGrabPointer(dpy, root, False, MOUSEMASK, GrabModeAsync, GrabModeAsync,
         None, cursor[CurResize]->cursor, CurrentTime) != GrabSuccess)
         return;
     XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
-	if (arg->i != 1)
-		XWarpPointer(dpy, None, c->win, 0, 0, 0, 0,
-			c->w + c->bw - 1, c->h + c->bw - 1);
+    if (arg->i != 1)
+        XWarpPointer(dpy, None, c->win, 0, 0, 0, 0,
+            c->w + c->bw - 1, c->h + c->bw - 1);
     do {
         XMaskEvent(dpy, MOUSEMASK|ExposureMask|SubstructureRedirectMask, &ev);
         switch(ev.type) {
@@ -1394,10 +1394,10 @@ resizemouse(const Arg *arg)
 
             nw = MAX(ev.xmotion.x - ocx - 2 * c->bw + 1, 1);
             nh = MAX(ev.xmotion.y - ocy - 2 * c->bw + 1, 1);
-			if (c->crop) {
-				nw = MIN(nw, c->crop->w + c->crop->x);
-				nh = MIN(nh, c->crop->h + c->crop->y);
-			}
+            if (c->crop) {
+                nw = MIN(nw, c->crop->w + c->crop->x);
+                nh = MIN(nh, c->crop->h + c->crop->y);
+            }
             if (c->mon->wx + nw >= selmon->wx && c->mon->wx + nw <= selmon->wx + selmon->ww
             && c->mon->wy + nh >= selmon->wy && c->mon->wy + nh <= selmon->wy + selmon->wh)
             {
@@ -1503,8 +1503,8 @@ setclientstate(Client *c, long state)
 {
     long data[] = { state, None };
 
-	if (c->crop)
-		c = c->crop;
+    if (c->crop)
+        c = c->crop;
     XChangeProperty(dpy, c->win, wmatom[WMState], wmatom[WMState], 32,
         PropModeReplace, (unsigned char *)data, 2);
 }
@@ -1536,8 +1536,8 @@ sendevent(Client *c, Atom proto)
 
 void
 setfocus(Client *c) {
-	if (c->crop)
-		c = c->crop;
+    if (c->crop)
+        c = c->crop;
     if (!c->neverfocus) {
         XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
         XChangeProperty(dpy, root, netatom[NetActiveWindow],
@@ -1550,8 +1550,8 @@ setfocus(Client *c) {
 void
 setfullscreen(Client *c, int fullscreen)
 {
-	if (c->crop)
-		c = c->crop;
+    if (c->crop)
+        c = c->crop;
     if (fullscreen && !c->isfullscreen) {
         XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
             PropModeReplace, (unsigned char*)&netatom[NetWMFullscreen], 1);
@@ -1781,8 +1781,8 @@ togglefloating(const Arg *arg)
     if (selmon->sel->isfloating)
         resize(selmon->sel, selmon->sel->x, selmon->sel->y,
             selmon->sel->w, selmon->sel->h, 0);
-	if (!selmon->sel->isfloating && selmon->sel->crop)
-		cropdelete(selmon->sel);
+    if (!selmon->sel->isfloating && selmon->sel->crop)
+        cropdelete(selmon->sel);
     arrange(selmon);
 }
 
@@ -1841,8 +1841,8 @@ unmanage(Client *c, int destroyed)
     Monitor *m = c->mon;
     XWindowChanges wc;
 
-	if (c->crop)
-		cropdelete(c);
+    if (c->crop)
+        cropdelete(c);
     detach(c);
     detachstack(c);
     if (!destroyed) {
