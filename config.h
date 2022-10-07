@@ -1,7 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance ---------------------------------------------- {{{ */
-static const unsigned int personalVersion   = 1;
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const char *fonts[]          = { "monospace:size=10" };
@@ -27,8 +26,9 @@ static const Rule rules[] = {
      *  WM_CLASS(STRING) = instance, class
      *  WM_NAME(STRING) = title
      */
-    /* class      instance    title       tags mask     isfloating   monitor */
-    { "Gimp",     NULL,       NULL,       0,            1,           -1 },
+    /* class            instance    title       tags mask       isfloating      monitor */
+    { "Gimp",           NULL,       NULL,       0,              1,              -1 },
+    { "Tor Browser",    NULL,       NULL,       26 >> 1,        0,              1 },
 };
 /* tagging -------------------------------------------------}}} */
 

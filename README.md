@@ -9,6 +9,12 @@ This is my every day use case, dwm customization.
 Mine comes with out a status bar, because I have the most
 suckless status bar off all, a clock.
 
+
+# Versions
+
+- 1 : added cropwindows
+
+
 # Working On / Desired Additions
 
 - dvorak native use, with my keyboard layout.
@@ -17,15 +23,15 @@ suckless status bar off all, a clock.
     * stacker
     * keypressrelease
     * freespace
-    * fakefullscreen
     * exresize
     * goback
     * doublepressquit
     * defaultlayooutpermonitor
     * current_desktop
-    * cool_autostart
     * aspectresize
     * cmdcustomize
+    * cool_autostart
+    * fakefullscreen
     * ~~cropwindows~~
     * ~~sticky~~
     * ~~cursorwarp~~
