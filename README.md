@@ -35,11 +35,11 @@ Version number is located in the version file
 - dvorak native use, with my keyboard layout.
 - patches
     * aspectresize
+    * goback
     * xtile
     * stacker
     * freespace
     * exresize
-    * goback
     * defaultlayooutpermonitor
     * keypressrelease
     * current_desktop
