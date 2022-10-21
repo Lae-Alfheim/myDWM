@@ -33,6 +33,7 @@ Version number is located in the version file
 # Working On / Desired Additions
 
 - dvorak native use, with my keyboard layout.
+- Move mouse with monitor to corner instead of middle
 - patches
     * aspectresize
     * goback
