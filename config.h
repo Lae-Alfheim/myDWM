@@ -28,7 +28,7 @@ static const Rule rules[] = {
      */
     /* class            instance    title       tags mask       isfloating      monitor */
     { "Gimp",           NULL,       NULL,       0,              1,              -1 },
-    { "Tor Browser",    NULL,       NULL,       26 >> 1,        0,              1 },
+    { "Tor Browser",    NULL,       NULL,       0,              0,              1 },
 };
 /* tagging -------------------------------------------------}}} */
 
@@ -72,8 +72,8 @@ static const Key keys[] = {
     { MODKEY,                       -1,                 XK_o,           spawn,              {.v = mouse}},
     { MODKEY,                       -1,                 XK_c,           spawn,              {.v = screenlock} },
 
-    { MODKEY,                       -1,                 XK_g,           incnmaster,         {.i = +1 } },
-    { MODKEY|ShiftMask,             -1,                 XK_g,           incnmaster,         {.i = -1 } },
+    { MODKEY|ControlMask,           -1,                 XK_g,           incnmaster,         {.i = +1 } },
+    { MODKEY|ControlMask|ShiftMask, -1,                 XK_g,           incnmaster,         {.i = -1 } },
     { MODKEY,                       -1,                 XK_h,           setmfact,           {.f = -0.05} },
     { MODKEY,                       -1,                 XK_l,           setmfact,           {.f = +0.05} },
 
