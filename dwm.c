@@ -251,7 +251,6 @@ static void (*handler[LASTEvent]) (XEvent *) = {
     [ConfigureNotify] = configurenotify,
     [DestroyNotify] = destroynotify,
     [EnterNotify] = enternotify,
-    /*[Expose] = expose,*/
     [FocusIn] = focusin,
     [KeyPress] = keypress,
     [MappingNotify] = mappingnotify,
