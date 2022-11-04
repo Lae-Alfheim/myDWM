@@ -12,6 +12,7 @@ suckless status bar off all, a clock.
 # Uniqueness
 
 - Three levels of 9 workspaces
+        * For used when both hands are on keyboard
 - No status bar
         * For the most suckless thing, a clock.
 - Cropwindows
